@@ -27,7 +27,6 @@ export default class DetailHistory extends React.Component {
       >
         <Text
           fontSize="15px"
-          fontWeight={500}
           color={selectedTab === tab ? colors.blue.normal : undefined}
           fontWeight={selectedTab === tab ? '600' : undefined}
         >

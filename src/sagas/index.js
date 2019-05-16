@@ -1,8 +1,5 @@
 import { all, fork, put, delay, select } from 'redux-saga/effects'
-import {
-  currentUserSelector,
-  currentBandClientSelector,
-} from 'selectors/current'
+import { currentBandClientSelector } from 'selectors/current'
 import { web3Selector } from 'selectors/wallet'
 import {
   updateProvider,
@@ -15,11 +12,7 @@ import {
   dumpTxs,
 } from 'actions'
 
-import {
-  blockNumberSelector,
-  transactionSelector,
-  transactionHiddenSelector,
-} from 'selectors/basic'
+import { blockNumberSelector, transactionSelector } from 'selectors/basic'
 
 import balancesSaga from 'sagas/balances'
 import ordersSaga from 'sagas/orders'

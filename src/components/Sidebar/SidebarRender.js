@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Image, Flex, Text, Bold, Box, HighlightNavLink } from 'ui/common'
+import { Image, Flex, Text, Bold, HighlightNavLink } from 'ui/common'
 import CircleLoadingSpinner from 'components/CircleLoadingSpinner'
 import MockProfileSrc from 'images/mock-profile.svg'
 import BalanceWallet from 'images/balanceWallet.svg'

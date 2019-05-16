@@ -1,78 +1,10 @@
 import React from 'react'
 import PageContainer from 'components/PageContainer'
-import { colors } from 'ui'
 import { Flex, Text, Box } from 'ui/common'
 import CircleLoadingSpinner from 'components/CircleLoadingSpinner'
 import MegaCommunityCard from 'components/MegaCommunityCard'
 
-const YourCommunities = ({ yourCommunities, bandPrice, history }) => {
-  if (yourCommunities.length === 0) return <div />
-  return (
-    <Box style={{ width: '100%' }}>
-      <PageContainer dashboard>
-        <Text
-          fontSize="16px"
-          color={colors.text.normal}
-          fontWeight="600"
-          pt={3}
-        >
-          YOUR COMMUNITIES
-        </Text>
-        <Flex flexWrap="wrap" mt={2} mx="-20px" justifyContent="flex-start">
-          {yourCommunities.map(yourCommunity => (
-            <MegaCommunityCard
-              key={yourCommunity.name}
-              community={yourCommunity}
-              bandPrice={bandPrice}
-              onClick={() =>
-                history.push(`/community/${yourCommunity.address}/overview`)
-              }
-            />
-          ))}
-        </Flex>
-      </PageContainer>
-    </Box>
-  )
-}
-
-const FeatureCommunity = ({ featureCommunities, bandPrice, history }) => {
-  if (featureCommunities.length === 0) return <div />
-  return (
-    <Box bg="#fafbfd" style={{ width: '100%' }}>
-      <PageContainer dashboard>
-        <Text
-          fontSize="16px"
-          color={colors.text.normal}
-          fontWeight="600"
-          pt={3}
-        >
-          FEATURED COMMUNITIES
-        </Text>
-        <Flex flexWrap="wrap" mt={3} mx="-20px" justifyContent="flex-start">
-          {featureCommunities.map(featureCommunity => (
-            <MegaCommunityCard
-              key={featureCommunity.name}
-              community={featureCommunity}
-              bandPrice={bandPrice}
-              style={{}}
-              onClick={() =>
-                history.push(`/community/${featureCommunity.address}/overview`)
-              }
-            />
-          ))}
-        </Flex>
-      </PageContainer>
-    </Box>
-  )
-}
-
-export default ({
-  communities,
-  yourCommunities,
-  featureCommunities,
-  bandPrice,
-  history,
-}) => (
+export default ({ communities, bandPrice, history }) => (
   <PageContainer
     fullWidth
     style={{ minHeight: 'calc(100vh - 80px)', background: '#f6f7fc' }}
@@ -109,7 +41,6 @@ export default ({
         </Box>
       </Flex>
     ) : (
-      // Loading icon
       <Flex
         style={{ height: 225 }}
         width="100%"

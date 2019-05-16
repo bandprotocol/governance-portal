@@ -7,7 +7,6 @@ import SidebarRender from 'components/Sidebar/SidebarRender'
 import { communityDetailSelector } from 'selectors/communities'
 import { bandPriceSelector } from 'selectors/bandPrice'
 import { currentUserSelector } from 'selectors/current'
-import { tcdsSelector } from 'selectors/tcd'
 
 class SideBar extends React.Component {
   state = {
