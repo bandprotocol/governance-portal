@@ -53,7 +53,6 @@ class Navbar extends React.Component {
     const { balance, price } = this.props
     const balanceToggled =
       this.state.isBND || !balance ? balance : balance.bandToUSD(price)
-
     return (
       <NavbarRender
         {...this.state}

@@ -1,26 +1,37 @@
 import { put } from 'redux-saga/effects'
-import { LOAD_ORDER_HISTORY, addOrders } from 'actions'
+import { LOAD_ORDER_HISTORY, addOrders, addNumOrders } from 'actions'
 import { takeEveryAsync } from 'utils/reduxSaga'
 import { Utils } from 'band.js'
 
-function* handleLoadHistory({ address }) {
-  // TODO: Find a better way.
-  const orders = (yield Utils.graphqlRequest(`{
+function* handleLoadHistory({ address, currentPage }) {
+  const {
+    communityByAddress: {
+      curveByCommunityAddress: {
+        ordersByCurveAddress: { nodes: orders, totalCount },
+      },
+    },
+  } = yield Utils.graphqlRequest(`{
     communityByAddress(address: "${address}") {
-    curveByCommunityAddress{
-      ordersByCurveAddress{
-        nodes{
-          amount
-          price
-          timestamp
-          txHash
-          user
-          orderType
+      curveByCommunityAddress {
+        ordersByCurveAddress(orderBy: TIMESTAMP_DESC, first: 10, offset: ${(currentPage -
+          1) *
+          10}) {
+          nodes {
+            amount
+            price
+            timestamp
+            txHash
+            user
+            orderType
+          }
+          totalCount
         }
       }
     }
-  }}`)).communityByAddress.curveByCommunityAddress.ordersByCurveAddress.nodes
-  yield put(addOrders(address, orders))
+  }
+  `)
+  yield put(addOrders(address, currentPage, orders))
+  yield put(addNumOrders(address, totalCount))
 }
 
 export default function*() {

@@ -61,7 +61,6 @@ export default ({
         <HistoryBody
           communityAddress={communityAddress}
           currentPage={currentPage}
-          pageSize={pageSize}
         />
         <OrderPagination
           communityAddress={communityAddress}
