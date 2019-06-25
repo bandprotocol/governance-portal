@@ -76,7 +76,7 @@ const YourVote = ({ isSupport, isVoted, isActive, vote }) =>
           <VoteButton
             selected={!isSupport && isVoted}
             colorVote="#ff6757"
-            colorShadow="ffb4ac"
+            colorShadow="#ffb4ac"
             onClick={() => vote(false)}
             disabled={isVoted}
             mx="5px"
