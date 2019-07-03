@@ -10,7 +10,6 @@ const mapStateToProps = (
   const items = transferHistorySelector(state, {
     address: communityAddress,
     page: currentPage,
-    pageSize,
   })
   while (items.length < pageSize) {
     items.push(null)

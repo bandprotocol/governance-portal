@@ -1,18 +1,20 @@
 import { put } from 'redux-saga/effects'
-import { LOAD_TRANSFER_HISTORY, addTransfers } from 'actions'
+import { LOAD_TRANSFER_HISTORY, addTransfers, addNumTransfers } from 'actions'
 import { Utils } from 'band.js'
 import { takeEveryAsync } from 'utils/reduxSaga'
 import BN from 'utils/bignumber'
 import moment from 'utils/moment'
 
-function* handleLoadTransferHistory({ address }) {
-  const transfers = (yield Utils.graphqlRequest(
+function* handleLoadTransferHistory({ address, currentPage, pageSize }) {
+  const { nodes: transfers, totalCount } = (yield Utils.graphqlRequest(
     `
       {
         communityByAddress(address: "${address}") {
           tokenByCommunityAddress {
             transfersByTokenAddress(
-              orderBy: TIMESTAMP_DESC
+              orderBy: TIMESTAMP_DESC,
+              first: 10,
+              offset: ${(currentPage - 1) * pageSize},
               filter: {
                 sender: { notEqualTo: "0x0000000000000000000000000000000000000000" }
                 receiver: { notEqualTo: "0x0000000000000000000000000000000000000000" }
@@ -25,16 +27,18 @@ function* handleLoadTransferHistory({ address }) {
                 txHash
                 timestamp
               }
+              totalCount
             }
           }
         }
       }
       `,
-  )).communityByAddress.tokenByCommunityAddress.transfersByTokenAddress.nodes
+  )).communityByAddress.tokenByCommunityAddress.transfersByTokenAddress
 
   yield put(
     addTransfers(
       address,
+      currentPage,
       transfers.map(tx => ({
         txHash: tx.txHash,
         timeStamp: moment.unix(tx.timestamp),
@@ -44,6 +48,8 @@ function* handleLoadTransferHistory({ address }) {
       })),
     ),
   )
+
+  yield put(addNumTransfers(address, totalCount))
 }
 
 export default function*() {
