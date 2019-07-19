@@ -13,12 +13,10 @@ class Richlist extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.loadHolders()
-    this.setState({
-      fetching: false,
-    })
+    await this.loadHolders()
+
     this.checker = setInterval(() => {
-      this.props.loadHolders()
+      this.props.loadHoldersOnPage(this.state.currentPage)
     }, 3000)
   }
 
@@ -26,21 +24,31 @@ class Richlist extends React.Component {
     clearInterval(this.checker)
   }
 
-  onChangePage(selectedPage) {
+  async loadHolders() {
+    await this.props.loadHoldersOnPage(this.state.currentPage)
     this.setState({
-      currentPage: selectedPage,
+      fetching: false,
     })
   }
 
+  onChangePage(selectedPage) {
+    this.setState(
+      {
+        currentPage: selectedPage,
+        fetching: true,
+      },
+      async () => {
+        await this.loadHolders()
+      },
+    )
+  }
+
   render() {
-    const { communityAddress, pageSize, numberOfHolders } = this.props
     return (
       <RichlistRender
         {...this.state}
-        numberOfHolders={numberOfHolders}
-        communityAddress={communityAddress}
+        {...this.props}
         onChangePage={this.onChangePage.bind(this)}
-        pageSize={pageSize}
       />
     )
   }
@@ -54,8 +62,12 @@ const mapStateToProps = (state, { communityAddress }) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, { communityAddress }) => ({
-  loadHolders: () => dispatchAsync(dispatch, loadHolders(communityAddress)),
+const mapDispatchToProps = (dispatch, { communityAddress, pageSize }) => ({
+  loadHoldersOnPage: currentPage =>
+    dispatchAsync(
+      dispatch,
+      loadHolders(communityAddress, currentPage, pageSize),
+    ),
 })
 
 export default withRouter(
