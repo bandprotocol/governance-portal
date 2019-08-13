@@ -8,6 +8,16 @@ import CommunityIntegrationPage from 'pages/CommunityIntegration'
 import CommunityDataProviderPage from 'pages/CommunityDataProvider'
 import DatasetActivityLogsPage from 'pages/DatasetActivityLogs'
 
+// Lazy loading
+// const CommunityDataSetPage = lazy(() => import('pages/CommunityDataSet'))
+// const CommunityIntegrationPage = lazy(() =>
+//   import('pages/CommunityIntegration'),
+// )
+// const CommunityDataProviderPage = lazy(() =>
+//   import('pages/CommunityDataProvider'),
+// )
+// const DatasetActivityLogsPage = lazy(() => import('pages/DatasetActivityLogs'))
+
 const TCDRoutes = ({ path, communityAddress, tcdAddress, redirect }) => {
   if (redirect) {
     return <Redirect to={`/community/${communityAddress}/overview`} />
