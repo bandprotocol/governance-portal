@@ -9,6 +9,8 @@ import {
   tokenLockByTCDSelector,
 } from 'selectors/balances'
 import BN from 'utils/bignumber'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const BgCard = styled(Flex).attrs({
   bg: 'white',
@@ -194,7 +196,7 @@ class DepositWithdrawModal extends React.Component {
             style={{ cursor: 'pointer' }}
             onClick={() => hideDepositWithdraw()}
           >
-            <i className="fas fa-times" />
+            <FontAwesomeIcon icon={faTimes} />
           </Flex>
         </Flex>
         <Flex
