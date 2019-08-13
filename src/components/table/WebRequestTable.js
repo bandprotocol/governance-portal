@@ -33,7 +33,7 @@ export default createTable({
               {d.warning}
             </ReactTooltip>
           )}
-          {d.warning && (
+          {/* {d.warning && (
             <ion-icon
               name="ios-warning"
               data-tip
@@ -45,7 +45,7 @@ export default createTable({
                 verticalAlign: 'text-bottom',
               }}
             />
-          )}
+          )} */}
         </React.Fragment>
       ),
       label: 'Last Update',
