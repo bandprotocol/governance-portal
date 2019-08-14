@@ -22,6 +22,22 @@ const BgCard = styled(Flex).attrs({
   box-shadow: 0 12px 23px 0 rgba(0, 0, 0, 0.13);
 `
 
+const MaxButton = styled(Button).attrs({
+  width: '40px',
+  fontSize: '14px',
+})`
+  height: 20px;
+  align-items: center;
+  margin: 0 10px;
+  padding: 0 0;
+  border-radius: 6px;
+  transition: 0.5s all;
+  cursor: ${props => (props.isMax ? 'default':'pointer' )};
+  background-color: ${props => (props.isMax ? '#7c84a6' : '#5973e7')};
+  opacity: ${props => (props.isMax ? 0.2: 1)}
+`
+
+
 const CustomButton = styled(Button).attrs({
   fontSize: '16px',
   fontWeight: 500,
@@ -178,7 +194,7 @@ class DepositWithdrawModal extends React.Component {
   }
 
   render() {
-    const { symbol, actionType, hideDepositWithdraw } = this.props
+    const { symbol, actionType, hideDepositWithdraw, userStake } = this.props
     return (
       <BgCard mt="100px">
         <Flex
@@ -226,7 +242,10 @@ class DepositWithdrawModal extends React.Component {
             )}
           </Text>
           <Flex my="30px">
-            <Flex style={{ position: 'absolute', right: '50px' }}>
+            <Flex style={{ position: 'absolute', right: '50px', alignItems: 'center' }}>
+              <MaxButton isMax={this.state.value && Number(this.state.value) === Number(userStake.pretty())} onClick={() => this.updateValue(userStake.pretty())}>
+                Max
+              </MaxButton>
               <Text
                 lineHeight="35px"
                 color="#cbcfe3"
@@ -273,6 +292,7 @@ const mapStateToProps = (
     dataSourceAddress,
     tcdAddress,
     userOwnership,
+    userStake,
     stake,
     totalOwnership,
   },
@@ -280,10 +300,12 @@ const mapStateToProps = (
   const community = communityDetailSelector(state, {
     address: tokenAddress,
   })
+
   if (!community) return {}
   return {
     actionType,
     userOwnership,
+    userStake,
     stake,
     totalOwnership,
     tokenAddress,
