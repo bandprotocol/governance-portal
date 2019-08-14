@@ -60,6 +60,7 @@ const ProvidersRow = ({
   status,
   showDepositWithdraw,
   txLink,
+  userRevenue
 }) => (
   <Flex
     flexDirection="row"
@@ -168,6 +169,20 @@ const ProvidersRow = ({
         {userStake.pretty()}
       </Text>
     </Tab>
+    <Tab flex={12} justifyContent="center">
+      <Text
+        color={colors.text}
+        fontSize="14px"
+        fontFamily="code"
+        style={{
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+        }}
+      >
+        {userRevenue.pretty()}
+      </Text>
+    </Tab>
     <Flex
       flex="0 0 265px"
       flexDirection="row"
@@ -263,6 +278,7 @@ export default ({ user, items, showDepositWithdraw }) => {
           totalOwnership,
           userOwnership,
           status,
+          userRevenue
         } = item
         return (
           <ProvidersRow
@@ -281,6 +297,7 @@ export default ({ user, items, showDepositWithdraw }) => {
             totalOwnership={totalOwnership}
             showDepositWithdraw={showDepositWithdraw}
             txLink={`https://kovan.etherscan.io/address/${dataSourceAddress}`}
+            userRevenue={userRevenue}
           />
         )
       })}
