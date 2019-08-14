@@ -243,9 +243,13 @@ class DepositWithdrawModal extends React.Component {
           </Text>
           <Flex my="30px">
             <Flex style={{ position: 'absolute', right: '50px', alignItems: 'center' }}>
-              <MaxButton isMax={this.state.value && Number(this.state.value) === Number(userStake.pretty())} onClick={() => this.updateValue(userStake.pretty())}>
+              {actionType === 'WITHDRAW' ? (
+                <MaxButton
+                isMax={this.state.value && Number(this.state.value) === Number(userStake.pretty())}
+                onClick={() => this.updateValue(userStake.pretty())}>
                 Max
-              </MaxButton>
+              </MaxButton>): ('')}
+
               <Text
                 lineHeight="35px"
                 color="#cbcfe3"
